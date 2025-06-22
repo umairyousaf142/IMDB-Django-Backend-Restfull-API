@@ -5,7 +5,7 @@ class streamPlatformSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=False, allow_blank=True, max_length=100)
     about = serializers.CharField(style={'base_template': 'textarea.html'})
-    website = serializers.BooleanField(required=False)
+    website = serializers.URLField(max_length=200)
     created = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
@@ -23,7 +23,7 @@ class watchListSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     title = serializers.CharField(required=False, allow_blank=True, max_length=100)
     storyline = serializers.CharField(style={'base_template': 'textarea.html'})
-    # platform = streamPlatformSerializer()
+    platform = streamPlatformSerializer()
     active = serializers.BooleanField(default=True)
     created = serializers.DateTimeField(read_only=True)
 
@@ -33,7 +33,7 @@ class watchListSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.storyline = validated_data.get('storyline', instance.storyline)
-        # instance.platform = validated_data.get('platform', instance.platform)
+        instance.platform = validated_data.get('platform', instance.platform)
         instance.active = validated_data.get('active', instance.active)
         instance.save()
         return instance
