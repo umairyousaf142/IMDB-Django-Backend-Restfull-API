@@ -138,4 +138,4 @@ class watchListUpdate(APIView):
         if movie is None:
             return Response({'error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
         movie.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENTr)
