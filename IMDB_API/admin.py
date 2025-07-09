@@ -5,3 +5,4 @@ from . models import *
 
 admin.site.register(stramPlatform)
 admin.site.register(watchList)
+admin.site.register(review)

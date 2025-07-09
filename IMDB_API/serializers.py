@@ -2,19 +2,22 @@ from rest_framework import serializers
 from .models import *
 
 
-
-
-class streamPlatformSerializer(serializers.ModelSerializer):
+class reviewSerializer(serializers.ModelSerializer):
     class Meta:
-        model = stramPlatform
+        model = review
         fields = '__all__'
 
-
 class watchListSerializer(serializers.ModelSerializer):
+    reviews = reviewSerializer(read_only=True, many=True)
     class Meta:
         model = watchList
         fields = '__all__'
-        depth = 1  
+
+class streamPlatformSerializer(serializers.ModelSerializer):
+    watchlists = watchListSerializer(read_only=True, many=True)
+    class Meta:
+        model = stramPlatform
+        fields = '__all__'
 
 
 

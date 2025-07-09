@@ -14,8 +14,9 @@ from .serializers import *
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
-        'watchList': reverse('movie_list', request=request, format=format),
-        'streamPlateForm': reverse('stream_platform_list', request=request, format=format)
+        'WatchListMovies': reverse('movie_list', request=request, format=format),
+        'streamPlateForm': reverse('stream_platform_list', request=request, format=format),
+        'reviews': reverse('reviews', request=request, format=format)
     })
 
 
@@ -27,7 +28,7 @@ class watchPlatformList(mixins.ListModelMixin,
     
     queryset = watchList.objects.all()
     serializer_class = watchListSerializer
-
+    
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
@@ -85,6 +86,44 @@ class streamPlateformUpdate(mixins.RetrieveModelMixin,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+    
+
+
+class reviewList(mixins.ListModelMixin,
+                  mixins.CreateModelMixin,
+                  generics.GenericAPIView):
+    
+    queryset = review.objects.all()
+    serializer_class = reviewSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+    
+
+class reviewListUpdate(mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    generics.GenericAPIView):
+    
+    queryset = review.objects.all()
+    serializer_class = reviewSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+    
+
+
+
+
 # """Class Based Views for Stream Platform and Watch List"""
 
 # class warchPlatformList(APIView):
